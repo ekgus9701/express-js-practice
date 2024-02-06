@@ -51,11 +51,15 @@ app.use(express.static(path.join(__dirname, "public")));
 // app.post("/sample", (req, res) => {
 //   res.send("Create First POST router");
 // });
-const boardRouter = require("./routes/board");
-app.use("/board", boardRouter);
+
+// const boardRouter = require("./routes/board");
+// app.use("/board", boardRouter);
 
 // const watchaRouter = require("./routes/watcha");
 // app.use("/watcha", watchaRouter);
+
+const todoRouter = require("./routes/todo");
+app.use("/todo", todoRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

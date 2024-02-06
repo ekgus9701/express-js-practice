@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Watcha = require("../model/Watcha");
-const WatchaComment = require("../model/WatchaComment");
+//const WatchaComment = require("../model/WatchaComment");
 
 router.get("/", function (req, res, next) {
   Watcha.find()
