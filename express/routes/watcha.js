@@ -3,6 +3,30 @@ const router = express.Router();
 const Watcha = require("../model/Watcha");
 //const WatchaComment = require("../model/WatchaComment");
 
+router.get("/:paramId", function (req, res, next) {
+  const watchaId = req.params.paramId;
+  if (!req.session.title) {
+    req.session.title = [];
+  }
+
+  Watcha.findById(watchaId)
+    .then((data) => {
+      //console.log(data);
+      const title = data.title;
+
+      if (req.session.title.length === 10) {
+        req.session.title.shift();
+      }
+      req.session.title.push(title);
+
+      console.log(req.session.title);
+      res.send(data);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 router.get("/", function (req, res, next) {
   Watcha.find()
     .then((data) => {

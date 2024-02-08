@@ -11,7 +11,7 @@ const Comment = require("../model/Comment");
 /board/:boardId PUT -> 게시글 자원 중 boardID 자원을 수정해 줘
 /board/:boardId DELETE ->  게시글 자원 중에 boardID 자원을 삭제해 줘
 
-/board/:boardId/comments GET -> 게시글 자원 중 boardID 자원의 댓글 리스트를 가져와 줘
+/board/:boardId/commenㅊㅇts GET -> 게시글 자원 중 boardID 자원의 댓글 리스트를 가져와 줘
 */
 
 // router.get("/", (req, res) => {

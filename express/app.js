@@ -4,6 +4,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const session = require("express-session");
 
 // var indexRouter = require("./routes/index");
 // var usersRouter = require("./routes/users");
@@ -38,6 +39,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "<my-secret>",
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: true,
+    },
+  })
+);
+
 // app.use("/", indexRouter);
 // app.use("/users", usersRouter);
 
@@ -52,11 +64,20 @@ app.use(express.static(path.join(__dirname, "public")));
 //   res.send("Create First POST router");
 // });
 
-// const boardRouter = require("./routes/board");
-// app.use("/board", boardRouter);
+const boardRouter = require("./routes/board");
+app.use("/board", boardRouter);
 
-// const watchaRouter = require("./routes/watcha");
-// app.use("/watcha", watchaRouter);
+app.use((req, res, next) => {
+  if (!req.session.path) {
+    req.session.path = [];
+  }
+  req.session.path.push(req.url);
+  console.log(req.session.path);
+  next();
+});
+
+const watchaRouter = require("./routes/watcha");
+app.use("/watcha", watchaRouter);
 
 const todoRouter = require("./routes/todo");
 app.use("/todo", todoRouter);
