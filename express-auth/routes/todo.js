@@ -4,7 +4,8 @@ const Todo = require("../model/Todo");
 const User = require("../model/User");
 const { createToken, verifyToken } = require("../utils/auth");
 
-router.get("/", authenticate, function (req, res, next) {
+router.get("/", function (req, res, next) {
+  ///authenticate는 토큰이 있어야 이 함수가 실행된다는 것임
   Todo.find()
     .then((todos) => {
       res.json(todos);
@@ -15,7 +16,7 @@ router.get("/", authenticate, function (req, res, next) {
     });
 });
 
-router.get("/:id", authenticate, function (req, res, next) {
+router.get("/:id", function (req, res, next) {
   Todo.findById(req.params.id)
     .then((todo) => {
       res.json(todo);

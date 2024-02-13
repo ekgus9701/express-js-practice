@@ -14,6 +14,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "비밀번호가 입력되어야 합니다."],
   },
+  nickname: {
+    type: String,
+  },
 });
 
 //statics를 쓴다 => User(맨 아래줄 보기)를 호출하면 실행되는 함수라고 생각하면 될듯?

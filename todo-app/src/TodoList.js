@@ -1,31 +1,10 @@
 import React from "react";
 import TodoItem from "./TodoItem";
 
-const extractInitialConsonants = (text) => {
-  return text
-    .split("")
-    .map((char) => {
-      const unicode = char.charCodeAt(0);
-      if (unicode >= 44032 && unicode <= 55203) {
-        const initialConsonantIndex = (unicode - 44032) / 28 / 21;
-        const initialConsonant = String.fromCharCode(
-          0x1100 + initialConsonantIndex
-        );
-        return initialConsonant;
-      } else {
-        return char;
-      }
-    })
-    .join("");
-};
-
 export default function TodoList({ todoList, onDelete, onUpdate, search }) {
-  const filteredTodoList = todoList.filter((todo) => {
-    const initialConsonants = extractInitialConsonants(
-      todo.title
-    ).toLowerCase();
-    return initialConsonants.includes(search.toLowerCase());
-  });
+  const filteredTodoList = todoList.filter((todo) =>
+    todo.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div>
