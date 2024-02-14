@@ -54,6 +54,9 @@ app.use(
 const todoRouter = require("./routes/todo");
 app.use("/todo", todoRouter);
 
+const boardRouter = require("./routes/board");
+app.use("/board", boardRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

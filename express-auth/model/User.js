@@ -57,6 +57,18 @@ visibleUser.get(function (value, virtual, doc) {
   };
 });
 
+userSchema.virtual("boards", {
+  ref: "Board",
+  localField: "_id", //본인의 _id를 Board.js에서 참조하려고하는 값과 매핑한다.
+  foreignField: "author", //Board.js에서 author라는 이름으로 참조하려고하니까 써준다.
+});
+
+userSchema.virtual("comments", {
+  ref: "Comment",
+  localField: "_id",
+  foreignField: "writer",
+});
+
 const User = mongoose.model("user", userSchema);
 
 module.exports = User;
