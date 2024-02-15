@@ -43,7 +43,33 @@ async function authenticate(req, res, next) {
   next();
 }
 
+// router.get("/comments", function (req, res, next) {
+//   Comment.find()
+//     .then((data) => {
+//       res.json(data);
+//       res.send(res.json(data));
+//     })
+//     .catch((err) => {
+//       next(err);
+//     });
+// });
+
 router.get("/comments", function (req, res, next) {
+  const { boardId } = req.query;
+  console.log(boardId);
+  Comment.find({
+    board: boardId,
+  })
+
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+router.get("/comments/:boardId", function (req, res, next) {
   Comment.find()
     .then((data) => {
       res.json(data);
@@ -53,7 +79,6 @@ router.get("/comments", function (req, res, next) {
       next(err);
     });
 });
-
 router.post("/comments", authenticate, function (req, res, next) {
   const writer = req.user._id ? req.user._id : null;
 
@@ -70,21 +95,21 @@ router.post("/comments", authenticate, function (req, res, next) {
     });
 });
 
-// /api/comment/?boardId=:boardId&page=1&size=10 GET (코멘트 조회)
-router.get("/comments", function (req, res, next) {
-  const { boardId, page, size } = req.query;
-  Comment.find({
-    board: boardId,
-  })
-    .skip((page - 1) * size)
-    .limit(Number(size))
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
+// // /api/comment/?boardId=:boardId&page=1&size=10 GET (코멘트 조회)
+// router.get("/comments", function (req, res, next) {
+//   const { boardId, page, size } = req.query;
+//   Comment.find({
+//     board: boardId,
+//   })
+//     .skip((page - 1) * size)
+//     .limit(Number(size))
+//     .then((data) => {
+//       res.json(data);
+//     })
+//     .catch((err) => {
+//       next(err);
+//     });
+// });
 
 router.put("/comments/:commentId", authenticate, function (req, res, next) {
   const { commentId } = req.params;
@@ -227,8 +252,8 @@ router.all("/logout", async (req, res, next) => {
 
     res.json({ message: "로그아웃 완료" });
 
-    console.log(user);
-    res.status(201).json(user);
+    //console.log(user);
+    // res.status(201).json(user);
   } catch (err) {
     console.error(err);
     res.status(400);

@@ -12,6 +12,10 @@ const boardSchema = new mongoose.Schema(
       ref: "User",
       //required: true,
     },
+
+    img: {
+      type: String,
+    },
   },
   {
     toJSON: { virtuals: true },
