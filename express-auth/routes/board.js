@@ -43,17 +43,6 @@ async function authenticate(req, res, next) {
   next();
 }
 
-// router.get("/comments", function (req, res, next) {
-//   Comment.find()
-//     .then((data) => {
-//       res.json(data);
-//       res.send(res.json(data));
-//     })
-//     .catch((err) => {
-//       next(err);
-//     });
-// });
-
 router.get("/comments", function (req, res, next) {
   const { boardId } = req.query;
   console.log(boardId);
@@ -63,6 +52,17 @@ router.get("/comments", function (req, res, next) {
 
     .then((data) => {
       res.json(data);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+router.get("/comments", function (req, res, next) {
+  Comment.find()
+    .then((data) => {
+      res.json(data);
+      res.send(res.json(data));
     })
     .catch((err) => {
       next(err);
@@ -181,6 +181,7 @@ router.post("/", authenticate, function (req, res, next) {
 });
 
 router.put("/:boardId", authenticate, function (req, res, next) {
+  console.log("dataaa");
   Board.findByIdAndUpdate(req.params.boardId, req.body)
     .then((data) => {
       res.json(data);

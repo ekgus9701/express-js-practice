@@ -25,7 +25,7 @@ const boardSchema = new mongoose.Schema(
 
 boardSchema.set("timestamps", {
   createdAt: "createdAt",
-  updatedAt: "updateAt",
+  updatedAt: "updatedAt",
 });
 
 boardSchema.virtual("comments", {
